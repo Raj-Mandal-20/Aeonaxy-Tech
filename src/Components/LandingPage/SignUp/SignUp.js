@@ -13,6 +13,8 @@ const SignUp = (props) => {
   const [message, setMessage] = useState("");
   const [checkBox , setCheckbox] = useState(false);
   const [usernameTaken , setUsernameTaken] = useState(false);
+  const [emailMessage, setEmailMessage] = useState('');
+  const [isEmailUsed, setIsEMailUsed] = useState(false);
 
   useEffect(() => {
     // check username is already is already taken or not
@@ -44,6 +46,34 @@ const SignUp = (props) => {
       console.log(resData);
     });
 
+    fetch(`${process.env.REACT_APP_API_URL}auth/check-email`,{
+      method : 'POST',
+      headers : {
+        "Content-Type": "application/json",
+      },
+      body : JSON.stringify({
+        email : email
+      })
+    }).then((res) => {
+      console.log(res);
+      
+      return res.json();
+
+    }).then((resData)=>{
+      console.log(resData);
+      if(resData.isEmailUsed === true){
+         setEmailMessage(resData.message);
+         setIsEMailUsed(true);
+      }
+      else {
+        setEmailMessage('');
+        setIsEMailUsed(false);
+      }
+      console.log(resData);
+    });
+
+
+
     }, 300);
     return ()=>{
       console.log('running');
@@ -52,7 +82,7 @@ const SignUp = (props) => {
     }
     
     // check email is already is already taken or not
-  }, [username]);
+  }, [username, email]);
 
   const nameHandler = (e) => {
     setName(e.target.value);
@@ -104,6 +134,7 @@ const SignUp = (props) => {
           setName('');
           setPassword('');
           setUsername('');
+          
           setCheckbox((prevState)=> !prevState);
         
         }, 1000);
@@ -124,9 +155,10 @@ const SignUp = (props) => {
         </div>
         <div className="flex flex-col gap-5 pb-10">
           <div className="text-2xl font-bold">Sign up to Dribble</div>
-          <div>
+          <div className="flex flex-col gap-3">
             {" "}
             <h4 className={`${usernameTaken ? 'text-red-500' : 'text-green-500' }  h-[10px]`}> {message} </h4>
+            <h4 className={`${isEmailUsed ? 'text-red-500' : 'text-green-500' }  h-[10px]`}> {emailMessage} </h4>
           </div>
         </div>
         <form onSubmit={submitHandler}>
@@ -159,12 +191,13 @@ const SignUp = (props) => {
             </div>
           </div>
           <div className="my-5 flex flex-col">
-            <label htmlFor="email" className="font-bold"> Email </label>
+            <label htmlFor="email" className="font-bold">  {isEmailUsed ? <FontAwesomeIcon icon={faWarning} className="text-red-500"/>: ''} Email
+            </label>
             <input
               type="email"
               name="email"
               id="email"
-              className="px-2 rounded h-[2.5rem] bg-gray-200 outline-none "
+              className={`px-2 rounded h-[2.5rem] bg-gray-200 outline-none ${isEmailUsed ? 'bg-red-200' : ''}`}
               value={email}
               required
               onChange={emailHandler}
