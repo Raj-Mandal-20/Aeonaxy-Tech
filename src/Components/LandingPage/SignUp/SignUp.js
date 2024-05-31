@@ -20,7 +20,7 @@ const SignUp = (props) => {
     // check username is already is already taken or not
   
    const Timer =  setTimeout(()=>{
-    fetch(`${process.env.REACT_APP_API_URL}auth/valid_username`,{
+    fetch(`${process.env.REACT_APP_API_URL}/auth/valid_username`,{
       method : 'POST',
       headers : {
         "Content-Type": "application/json",
@@ -46,7 +46,7 @@ const SignUp = (props) => {
       console.log(resData);
     });
 
-    fetch(`${process.env.REACT_APP_API_URL}auth/check-email`,{
+    fetch(`${process.env.REACT_APP_API_URL}/auth/check-email`,{
       method : 'POST',
       headers : {
         "Content-Type": "application/json",

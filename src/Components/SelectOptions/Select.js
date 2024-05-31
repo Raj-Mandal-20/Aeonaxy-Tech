@@ -71,7 +71,7 @@ const Select = (props) => {
     e.preventDefault();
     console.log(location);
 
-    fetch(`${process.env.REACT_APP_API_URL}makeprofile/personal-details`, {
+    fetch(`${process.env.REACT_APP_API_URL}/makeprofile/personal-details`, {
       method: "POST",
       headers: {
         Authorization: "Bearer " + token,

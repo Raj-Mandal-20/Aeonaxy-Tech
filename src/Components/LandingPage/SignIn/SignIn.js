@@ -28,7 +28,7 @@ const SignIn = (props) => {
     e.preventDefault();
     // ${process.env.REACT_APP_API_URL}
     console.log(e.target.credential.value);
-    fetch(`${process.env.REACT_APP_API_URL}auth/signin`, {
+    fetch(`${process.env.REACT_APP_API_URL}/auth/signin`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -55,7 +55,7 @@ const SignIn = (props) => {
         dispatch(authAction.setAuthentication({ token: resData.token, email : resData.email }));
 
         const user = await fetch(
-          `${process.env.REACT_APP_API_URL}makeprofile/personal-details/datataken`,
+          `${process.env.REACT_APP_API_URL}/makeprofile/personal-details/datataken`,
           {
             headers: {
               Authorization: "Bearer " + resData.token,
