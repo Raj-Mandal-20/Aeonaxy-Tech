@@ -104,7 +104,7 @@ const SignUp = (props) => {
   const submitHandler = (e) => {
     e.preventDefault();
     // navigate('/auth/signin');
-    fetch(`${process.env.REACT_APP_API_URL}auth/signup`, {
+    fetch(`${process.env.REACT_APP_API_URL}/auth/signup`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

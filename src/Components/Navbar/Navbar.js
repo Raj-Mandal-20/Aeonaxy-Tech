@@ -20,7 +20,7 @@ const Navbar = (props) => {
   };
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL}makeprofile/load-photo`, {
+    fetch(`${process.env.REACT_APP_API_URL}/makeprofile/load-photo`, {
       headers: {
         Authorization: "Bearer " + token,
       },
