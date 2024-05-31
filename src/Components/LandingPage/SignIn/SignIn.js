@@ -52,7 +52,7 @@ const SignIn = (props) => {
         console.log(resData);
         setMessage(resData.message);
         setIsLoggedIn(true);
-        dispatch(authAction.setAuthentication({ token: resData.token }));
+        dispatch(authAction.setAuthentication({ token: resData.token, email : resData.email }));
 
         const user = await fetch(
           `${process.env.REACT_APP_API_URL}makeprofile/personal-details/datataken`,

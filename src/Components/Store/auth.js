@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const authInitialState = {
     isAuthenticated : false,
     token : "",
+    email : "",
     isDataTaken : false
 }
 
@@ -16,6 +17,7 @@ const authSlice = createSlice({
             console.log('Reducer function')
             state.isAuthenticated = true;
             state.token  = action.payload.token;
+            state.email = action.payload.email;
         },
         setDataisTaken(state, action){
             state.isDataTaken = action.payload;
