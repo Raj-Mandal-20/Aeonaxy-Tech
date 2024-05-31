@@ -72,7 +72,7 @@ const Navbar = (props) => {
               <div className="cursor-pointer">
                 <div className="w-[60px] rounded-full ">
                   <img
-                    src={`${process.env.REACT_APP_API_URL}${photo}`}
+                    src={`${process.env.REACT_APP_API_URL}/${photo}`}
                     className="rounded-full h-[60px] p-4"
                   />
                 </div>
