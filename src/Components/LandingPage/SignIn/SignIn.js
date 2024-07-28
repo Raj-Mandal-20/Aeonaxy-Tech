@@ -2,12 +2,14 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { authAction } from "../../Store/auth";
+import CircleLoader from "react-spinners/CircleLoader";
 
 const SignIn = (props) => {
   let navigate = useNavigate();
   const dispatch = useDispatch();
   const api_url = process.env.REACT_APP_API_URL;
   const [message, setMessage] = useState("");
+  const [waiting, setWaiting] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [wrongPassword, setWrongPassword] = useState(false);
   const [password, setPassword] = useState("");
@@ -26,8 +28,7 @@ const SignIn = (props) => {
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
-    // ${process.env.REACT_APP_API_URL}
-    console.log(e.target.credential.value);
+    setWaiting(true);
     fetch(`${api_url}auth/signin`, {
       method: "POST",
       headers: {
@@ -63,10 +64,12 @@ const SignIn = (props) => {
           }
         );
         const userData = await user.json();
+        
         console.log(userData);
         setTimeout(() => {
           if (!userData.isDataTaken) navigate("/welcome");
           else navigate("/verify");
+          setWaiting(false);
         }, 1000);
       })
       .catch((err) => console.log(err));
@@ -125,9 +128,13 @@ const SignIn = (props) => {
           </div>
           <button
             type="submit"
-            className="btn btn-primary bg-[#F7418F] px-10 py-2 rounded-lg text-white my-5"
+            className="btn btn-primary text-center bg-[#F7418F] px-10 py-2 rounded-lg text-white my-5"
+            disabled={waiting}
           >
-            Sign In
+            {
+              !waiting ? 'Sign In' : <CircleLoader loading={true} size={18} color={'white'} />
+            }
+           
           </button>
           <div className="my-5">
             This site is Protected by reCAPTCHA and the Google{" "}

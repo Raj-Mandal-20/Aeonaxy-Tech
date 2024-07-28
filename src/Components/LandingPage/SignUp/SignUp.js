@@ -2,11 +2,12 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { faWarning } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import CircleLoader from "react-spinners/CircleLoader";
 
 const SignUp = (props) => {
   const navigate = useNavigate();
   const api_url = process.env.REACT_APP_API_URL;
-
+  const [waiting, setWaiting] = useState(false);
   const [name, setName] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -104,7 +105,7 @@ const SignUp = (props) => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    // navigate('/auth/signin');
+    setWaiting(true);
     fetch(`${api_url}auth/signup`, {
       method: "POST",
       headers: {
@@ -129,6 +130,7 @@ const SignUp = (props) => {
         console.log(resData);
 
         setMessage("Account Creation Successful!");
+
         setTimeout(() => {
           // navigate("/");
           setEmail('');
@@ -139,6 +141,7 @@ const SignUp = (props) => {
           setCheckbox((prevState)=> !prevState);
         
         }, 1000);
+        setWaiting(false);
       })
       .catch((err) => console.log(err));
   };
@@ -240,8 +243,12 @@ const SignUp = (props) => {
           <button
             type="submit"
             className="btn btn-primary bg-[#F7418F] px-10 py-2 rounded-lg text-white my-5"
+            disabled={waiting}
           >
-            Create Account
+           
+            {
+              !waiting ? 'Create Account' : <CircleLoader loading={true} size={18} color={'white'} />
+            }
           </button>
         </form>
         <div className="my-5">
