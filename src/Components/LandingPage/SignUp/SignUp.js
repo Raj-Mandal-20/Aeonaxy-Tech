@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const SignUp = (props) => {
   const navigate = useNavigate();
+  const api_url = process.env.REACT_APP_API_URL;
 
   const [name, setName] = useState("");
   const [username, setUsername] = useState("");
@@ -20,7 +21,7 @@ const SignUp = (props) => {
     // check username is already is already taken or not
   
    const Timer =  setTimeout(()=>{
-    fetch(`${process.env.REACT_APP_API_URL}/auth/valid_username`,{
+    fetch(`${api_url}auth/valid_username`,{
       method : 'POST',
       headers : {
         "Content-Type": "application/json",
@@ -46,7 +47,7 @@ const SignUp = (props) => {
       console.log(resData);
     });
 
-    fetch(`${process.env.REACT_APP_API_URL}/auth/check-email`,{
+    fetch(`${api_url}auth/check-email`,{
       method : 'POST',
       headers : {
         "Content-Type": "application/json",
@@ -104,7 +105,7 @@ const SignUp = (props) => {
   const submitHandler = (e) => {
     e.preventDefault();
     // navigate('/auth/signin');
-    fetch(`${process.env.REACT_APP_API_URL}/auth/signup`, {
+    fetch(`${api_url}auth/signup`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -12,6 +12,7 @@ import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 
 const Navbar = (props) => {
+  const api_url = process.env.REACT_APP_API_URL;
   const [photo, setProfilePhoto] = useState("");
   const token = useSelector((state) => state.auth.token);
   const navigate = useNavigate();
@@ -20,7 +21,7 @@ const Navbar = (props) => {
   };
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_URL}/makeprofile/load-photo`, {
+    fetch(`${api_url}makeprofile/load-photo`, {
       headers: {
         Authorization: "Bearer " + token,
       },
@@ -72,7 +73,7 @@ const Navbar = (props) => {
               <div className="cursor-pointer">
                 <div className="w-[60px] rounded-full ">
                   <img
-                    src={`${process.env.REACT_APP_API_URL}/${photo}`}
+                    src={`${api_url}${photo}`}
                     className="rounded-full h-[60px] p-4"
                   />
                 </div>

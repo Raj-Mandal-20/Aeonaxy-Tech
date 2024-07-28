@@ -10,8 +10,7 @@ const Select = (props) => {
   const loc = useLocation();
   const navigate = useNavigate();
   console.log(loc);
-  // const { profilePhoto, location } = loc.state;
-
+  const api_url = process.env.REACT_APP_API_URL;
   const token = useSelector((state) => state.auth.token);
   const profilePhoto = useSelector((state) => state.userData.profilePhoto);
   const location = useSelector((state) => state.userData.location);
@@ -71,7 +70,7 @@ const Select = (props) => {
     e.preventDefault();
     console.log(location);
 
-    fetch(`${process.env.REACT_APP_API_URL}/makeprofile/personal-details`, {
+    fetch(`${api_url}makeprofile/personal-details`, {
       method: "POST",
       headers: {
         Authorization: "Bearer " + token,
